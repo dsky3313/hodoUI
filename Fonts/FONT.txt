@@ -1,0 +1,11 @@
+2002		ONE 모바일고딕 Title	/ 채팅 및 와우 기본 글씨(접속창 및 대부분의 인터페이스)
+2002b		ONE 모바일고딕 Title	/ 채팅 및 와우 기본 글씨의 강조 문구 & 지역 표시
+
+ARIALN		더잠실체 Medium	/ 단축키. 사용X
+FRIZQT		더잠실체 Medium	/ 영문용. 사용X
+
+K_DAMAGE	이사만루 Light	/ 데미지
+
+K_PAGETEXT	빙그레체II Bold	/서적, 퀘스트 등
+
+이사만루체 Medium
