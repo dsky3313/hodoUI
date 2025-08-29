@@ -1,0 +1,23 @@
+## Interface: 110107
+## Title: Addon Usage
+## Notes: Displays the memory and cpu usage of your addons
+## Author: Gello
+## Version: 3.2.6
+## X-WoWI-ID: 7362
+## X-Wago-ID: Xb6XL06p
+## X-Curse-Project-ID: 67954
+## SavedVariables: AddonUsageSettings
+## IconTexture: Interface\Icons\INV_Misc_EngGizmos_30
+## AddonCompartmentFunc: AddonUsageToggleWindow
+## Category-enUS: Development Tools
+## Category-deDE: Entwicklungstools
+## Category-esES: Herramientas de Desarrollo
+## Category-esMX: Herramientas de Desarrollo
+## Category-frFR: Outils de Développement
+## Category-itIT:
+## Category-koKR:
+## Category-ptBR: Ferramentas de Desenvolvimento
+## Category-ruRU: Инструменты разработки
+## Category-zhCN: 开发工具
+## Category-zhTW: 開發工具
+AddonUsage.xml

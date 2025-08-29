@@ -1,0 +1,105 @@
+VER 3 000000000000007E "key" "134400"
+/key
+END
+VER 3 0000000000000006 "귀환" "INV_MISC_QUESTIONMARK"
+#showtooltip
+/use [nomod]강령군주 귀환석;[mod:shift]달라란 귀환석;[mod:ctrl]주둔지 귀환석;[mod:alt,btn:1][worn:단결의망토]단결의 망토;[mod:alt,btn:2][worn:합일의등싸개]합일의 등싸개
+/stopmacro [worn:단결의망토][worn:합일의 등싸개]
+/eq [mod:alt,btn:1]단결의 망토;[mod:alt,btn:2]합일의 등싸개
+END
+VER 3 000000000000004B "기둥1" "878218"
+/wm 1
+END
+VER 3 000000000000005B "기둥2" "878224"
+/wm 5
+END
+VER 3 000000000000004F "기둥2" "878224"
+/wm 7
+END
+VER 3 000000000000004D "기둥3" "878221"
+/wm 3
+END
+VER 3 0000000000000050 "기둥4" "878223"
+/wm 8
+END
+VER 3 000000000000004E "기둥5" "878222"
+/wm 4
+END
+VER 3 000000000000004C "기둥6" "878219"
+/wm 2
+END
+VER 3 0000000000000039 "물빵" "134400"
+#showtooltip 돌멩이 수프
+/use 만회
+/use 창조된 마나 찐빵
+/use 돌멩이 수프
+END
+VER 3 0000000000000014 "물약" "INV_MISC_QUESTIONMARK"
+#showtooltip 활력의 치유 물약
+/use 생명석
+/use 활력의 치유 물약
+/use 꿈나그네의 치유 물약
+/use 평온의 약병
+/use 영원한 호드 폭죽
+END
+VER 3 0000000000000074 "부활1" "INV_Misc_QuestionMark"
+#showtooltip
+/use 9
+/s [기공전부] ▶ [%t]
+END
+VER 3 0000000000000079 "연전" "INV_Misc_QuestionMark"
+#showtooltip
+/use [harm]연전연승;[help,dead,combat]9;[help,dead,nocombat]노움 군용칼;[help,nodead,nocombat]야생천 붕대
+END
+VER 3 0000000000000027 "장식1" "134400"
+#showtooltip
+/use 13
+END
+VER 3 0000000000000028 "장식2" "134400"
+#showtooltip
+/use 14
+END
+VER 3 000000000000007A "카운트" "2000843"
+//DBM
+/pull 0
+/run local _,t=GetInstanceInfo(); if SecureCmdOptionParse"[btn:2]" then s='0' elseif t=='raid' then s='12' else s='3' end SlashCmdList["DEADLYBOSSMODS"]("pull "..s)
+END
+VER 3 0000000000000045 "카운트" "2000841"
+//BIGWIGS
+/pull 0
+/run local _,t=GetInstanceInfo(); if SecureCmdOptionParse"[btn:2]" then s='0' elseif t=='raid' then s='15' else s='3' end SlashCmdList.pull(s)
+END
+VER 3 0000000000000007 "탈것" "134400"
+#showtooltip
+/use 만회
+/use [mod:shift]덩치 큰 원정용 야크
+/use [mod:alt]무역상의 금빛 브루토사우루스
+/use [advflyable]X-53 관광 로켓
+/use [flyable]X-53 관광 로켓
+/use [noflyable]X-53 관광 로켓
+END
+VER 3 0000000000000059 "탈것2" "134400"
+#showtooltip 덩치 큰 원정용 야크
+/run EjectPassengerFromSeat(1)
+/run EjectPassengerFromSeat(2)
+/use [nomounted] 덩치 큰 원정용 야크
+END
+VER 3 000000000000007D "토템X" "538569"
+/click TotemFrameTotem1 RightButton
+/click TotemFrameTotem2 RightButton
+/click TotemFrameTotem3 RightButton
+/click TotemFrameTotem4 RightButton
+END
+VER 3 0000000000000066 "파탈" "897141"
+/run C_PartyInfo.InviteUnit("일리단");C_Timer.After(0.1,function()C_PartyInfo.LeaveParty()end)
+END
+VER 3 0000000000000003 "확인" "3565717"
+/click QuestFrameCompleteQuestButton
+/click QuestFrameAcceptButton
+/click QuestFrameCompleteButton
+/click StaticPopup1Button1
+/run SelectAvailableQuest(1) 
+/run AcceptQuest(1) 
+/run CompleteQuest(1) 
+/run GetQuestReward(1)
+END

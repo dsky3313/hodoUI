@@ -1,0 +1,33 @@
+## Interface: 110200
+## Title: SasageMonitor
+## Version: 11.2.0
+## Notes: 사사게 모니터 입니다.
+## Author: SasageMonitor
+## IconTexture: Interface\Addons\SasageMonitor\logo
+## SavedVariables: CustomBlackList, CustomWhiteList, CustomGreenList, OptionVariables, SasageMonitorDB
+## X-Website: https://www.curseforge.com/wow/addons/SasageMonitor
+# X-License: GNU General Public License version 3 (GPLv3)
+# X-Category: Tooltip
+# DefaultState: Enabled
+# LoadOnDemand: 0
+# X-Curse-Project-Name: SasageMonitor
+# X-Curse-Project-ID: SasageMonitor
+
+libs\LibStub\LibStub.lua
+libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+libs\AceAddon-3.0\AceAddon-3.0.xml
+libs\AceConsole-3.0\AceConsole-3.0.xml
+libs\AceEvent-3.0\AceEvent-3.0.xml
+libs\AceDB-3.0\AceDB-3.0.xml
+libs\LibRealmInfo\LibRealmInfo.lua
+libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+Libs\LibDBIcon-1.0\lib.xml
+
+SasageMonitor.lua
+SasageMonitorService.lua
+SasageMonitor_data.lua
+SasageMonitor_UI_Main.lua
+SasageMonitor_UI_White.lua
+SasageMonitor_UI_Black.lua
+SasageMonitor_UI_Green.lua
+SasageMonitor_UI_Option.lua

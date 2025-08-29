@@ -1,0 +1,12 @@
+## Interface: 110002
+## Title: Soft Interact HUD
+## Notes: Displays a UI element when Soft Interact option is available.
+## Author: Mattsta
+## Version: 1.5
+## SavedVariables: SoftInteractOptions
+
+Libs\LibStub\LibStub.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+Libs\LibSharedMedia-3.0\LibSharedMedia-3.0.lua
+
+SoftInteractHUD.lua

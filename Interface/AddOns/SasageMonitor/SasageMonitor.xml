@@ -1,0 +1,9 @@
+<Ui>
+ <Script file="SasageMonitor.lua"/>
+ <Frame name="SasageMonitor">
+  <Scripts>
+   <OnLoad> self:RegisterEvent("UPDATE_MOUSEOVER_UNIT"); </OnLoad>
+   <OnEvent function="SasageToolTip" />
+  </Scripts>
+ </Frame>
+</Ui>
