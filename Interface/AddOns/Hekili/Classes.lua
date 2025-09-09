@@ -55,6 +55,7 @@ local specTemplate = {
     custom1Name = "Custom 1",
     custom2Name = "Custom 2",
     noFeignedCooldown = false,
+    disable_items = false,
 
     abilities = {
         ['**'] = {
@@ -1511,7 +1512,8 @@ all:RegisterAuras( {
     voidbinding = {
         id = 462661,
         duration = 30,
-        max_stack = 1
+        max_stack = 1,
+        shared = "player"
     },
     -- Priory of the Sacred Flame
     blessing_of_the_sacred_flame = {
@@ -2707,7 +2709,11 @@ do
         {
             name = "cavedwellers_delight",
             items = { 212242, 212243, 212244 }
-        }
+        },
+        {
+            name = "invigorating_healing_potion",
+            items = { 244835, 244838, 244839 }
+        }        
     }
 
 ---@diagnostic disable-next-line: need-check-nil

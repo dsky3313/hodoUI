@@ -12,9 +12,9 @@ local strfind = string.find
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 397
+local BIGWIGS_VERSION = 398
 local CONTENT_PACK_VERSIONS = {
-	["LittleWigs"] = {11, 2, 22},
+	["LittleWigs"] = {11, 2, 27},
 	["BigWigs_Classic"] = {11, 2, 0},
 	["BigWigs_BurningCrusade"] = {11, 1, 4},
 	["BigWigs_WrathOfTheLichKing"] = {11, 1, 7},
@@ -56,7 +56,7 @@ do
 	local ALPHA = "ALPHA"
 
 	local releaseType
-	local myGitHash = "ebfdbed" -- The ZIP packager will replace this with the Git hash.
+	local myGitHash = "3d79f92" -- The ZIP packager will replace this with the Git hash.
 	local releaseString
 	--[=[@alpha@
 	-- The following code will only be present in alpha ZIPs.
@@ -1476,7 +1476,7 @@ do
 		itIT = "Italian (itIT)",
 		--koKR = "Korean (koKR)",
 		--esES = "Spanish (esES)",
-		esMX = "Spanish (esMX)",
+		--esMX = "Spanish (esMX)",
 		--deDE = "German (deDE)",
 		ptBR = "Portuguese (ptBR)",
 		--frFR = "French (frFR)",
@@ -1484,13 +1484,13 @@ do
 	local realms = {
 		--[542] = locales.frFR, -- frFR
 		[3207] = locales.ptBR, [3208] = locales.ptBR, [3209] = locales.ptBR, [3210] = locales.ptBR, [3234] = locales.ptBR, -- ptBR
-		[1425] = locales.esMX, [1427] = locales.esMX, [1428] = locales.esMX, -- esMX
+		--[1425] = locales.esMX, [1427] = locales.esMX, [1428] = locales.esMX, -- esMX
 		[1309] = locales.itIT, [1316] = locales.itIT, -- itIT
 		--[1378] = locales.esES, [1379] = locales.esES, [1380] = locales.esES, [1381] = locales.esES, [1382] = locales.esES, [1383] = locales.esES, -- esES
 		--[1384] = locales.esES, [1385] = locales.esES, [1386] = locales.esES, [1387] = locales.esES, [1395] = locales.esES, -- esES
 	}
 	local criticalList = {
-		--[locales.esMX] = true,
+		[locales.itIT] = true,
 	}
 
 	local language = locales[myLocale]
@@ -1502,7 +1502,7 @@ do
 		delayedMessages[#delayedMessages+1] = msg1
 		delayedMessages[#delayedMessages+1] = msg2
 		delayedMessages[#delayedMessages+1] = msg3
-		if criticalList[language or realmLanguage] then
+		if myLocale == "enUS" and criticalList[realmLanguage] then
 			Popup(msg1.. "\n" ..msg2.. "\n" ..msg3, true)
 		end
 	end
@@ -1621,7 +1621,7 @@ do
 			local msg = myName.. "-" ..normalizedPlayerRealm.."\t"..protocol.."\t".. versionPrefix .."\t".. DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..myLocale.."\ttrue\t"..PForceDisable.."\t0\t0"
 			local result = SendAddonMessage(dbmPrefix, msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 			if type(result) == "number" and result ~= 0 then
-				if result == 9 then
+				if result == 3 or result == 8 or result == 9 then
 					timer = CTimerNewTimer(3, sendDBMMsg)
 					return
 				else
@@ -1700,7 +1700,7 @@ do
 		if IsInGroup() then
 			local result = SendAddonMessage("BigWigs", versionResponseString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 			if type(result) == "number" and result ~= 0 then
-				if result == 9 then
+				if result == 3 or result == 8 or result == 9 then
 					timer = CTimerNewTimer(3, sendMsg)
 					return
 				else

@@ -8,8 +8,8 @@ end
 L = BigWigs:NewBossLocale("Soulbinder Naazindhri", "koKR")
 if L then
 	L.voidblade_ambush = "매복" -- Short for Voidblade Ambush
-	L.soulfray_annihilation = "구슬" -- Lines that shoot out an orb along that path
-	L.soulfray_annihilation_single = "라인" -- Single from Lines
+	L.soulfray_annihilation = "보주" -- Lines that shoot out an orb along that path
+	L.soulfray_annihilation_single = "레이저" -- Single from Lines
 	L.remaining_adds = "남은 추가 몹" -- All remaining adds from Soul Calling spawn
 end
 
@@ -48,7 +48,7 @@ if L then
 	L.mass_destruction_single = "라인"
 	L.stardust_nova = "바닥" -- Short for Stardust Nova
 	L.extinguish_the_stars = "별" -- Short for Extinguish the Stars
-	L.darkened_sky = "충격파"
+	L.darkened_sky = "고리"
 	L.cosmic_collapse = "탱커 당기기"
 	L.cosmic_collapse_easy = "탱커 강타"
 	L.soaring_reshii = "비행 가능" -- On the timer for when flying is available

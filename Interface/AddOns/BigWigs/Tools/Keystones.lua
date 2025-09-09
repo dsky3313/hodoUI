@@ -34,6 +34,7 @@ do
 		countStartSound = "BigWigs: Long",
 		countEndSound = "BigWigs: Alarm",
 		showViewerDungeonEnd = true,
+		showViewerTeleportTip = true,
 		hideFromGuild = false,
 		viewerKeybind = "",
 		windowHeight = 320,
@@ -330,7 +331,7 @@ local LibSpec = LibStub("LibSpecialization")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 
 local guildList, partyList = {}, {}
-local WIDTH_NAME, WIDTH_LEVEL, WIDTH_MAP, WIDTH_RATING = 150, 24, 66, 42
+local WIDTH_NAME, WIDTH_LEVEL, WIDTH_MAP, WIDTH_RATING = 150, 24, 74, 42
 
 local GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 
@@ -422,6 +423,24 @@ do
 	text:SetSize(50, 30)
 	text:SetTextColor(0.65, 0.65, 0.65)
 	text:SetPoint("RIGHT", -26, 0)
+
+	local teleportBar = mainPanel:CreateTexture(nil, nil, nil, 5)
+	teleportBar:Hide()
+	mainPanel.teleportBar = teleportBar
+
+	local tip = CreateFrame("Frame", nil, mainPanel, "GlowBoxTemplate")
+	tip:Hide()
+	mainPanel.tip = tip
+	tip:SetSize(200, 60)
+	tip:SetPoint("BOTTOM", mainPanel, "TOP", 45, 20)
+	local arrow = CreateFrame("Frame", nil, tip, "GlowBoxArrowTemplate")
+	arrow:SetPoint("TOP", tip, "BOTTOM", 20, 5)
+	local tipText = tip:CreateFontString(nil, "OVERLAY", "GameFontHighlightLeft")
+	tipText:SetJustifyH("LEFT")
+	tipText:SetJustifyV("TOP")
+	tipText:SetSize(180, 0)
+	tipText:SetPoint("CENTER")
+	tipText:SetText(L.keystoneTeleportTip)
 end
 
 local UpdateMyKeystone
@@ -493,10 +512,16 @@ local function WipeCells()
 	for cell in next, cellsCurrentlyShowing do
 		cell:Hide()
 		cell:ClearAttributes()
+		cell:SetScript("PostClick", nil)
+		cell:SetScript("OnUpdate", nil)
 		cell.tooltip = nil
+		cell.playerName = nil
 		cell:ClearAllPoints()
 		cellsAvailable[#cellsAvailable+1] = cell
 	end
+	mainPanel.teleportBar:ClearAllPoints()
+	mainPanel.teleportBar:SetParent(mainPanel)
+	mainPanel.teleportBar:Hide()
 	cellsCurrentlyShowing = {}
 end
 local headersAvailable = {}
@@ -593,7 +618,7 @@ local function CreateCell()
 		cell.text:SetAllPoints(cell)
 		cell.text:SetJustifyH("CENTER")
 
-		local bg = cell:CreateTexture()
+		local bg = cell:CreateTexture(nil, nil, nil, -5)
 		bg:SetAllPoints(cell)
 		bg:SetColorTexture(0, 0, 0, 0.6)
 		cell.bg = bg
@@ -602,6 +627,12 @@ local function CreateCell()
 		return cell
 	end
 end
+
+for i = 1, 100 do -- XXX temp (hopefully)
+	CreateCell()
+end
+WipeCells()
+
 local function CreateHeader()
 	local header = headersAvailable[#headersAvailable]
 	if header then
@@ -741,6 +772,8 @@ do
 		tab.MiddleActive:Show()
 		tab.RightActive:Show()
 
+		mainPanel.tip:Hide()
+
 		PlaySound(841) -- SOUNDKIT.IG_CHARACTER_INFO_TAB
 	end
 	local function DeselectTab(tab)
@@ -771,7 +804,15 @@ do
 		local HasSlottedKeystone, SlotKeystone = C_ChallengeMode.HasSlottedKeystone, C_ChallengeMode.SlotKeystone
 		local GetOwnedKeystoneMapID = C_MythicPlus.GetOwnedKeystoneMapID
 		local GetContainerNumSlots, GetContainerItemLink, PickupContainerItem = C_Container.GetContainerNumSlots, C_Container.GetContainerItemLink, C_Container.PickupContainerItem
+		local text
 		tab1:SetScript("OnEvent", function()
+			if not text then
+				text = ChallengesKeystoneFrame:CreateFontString(nil, nil, "Fancy14Font")
+				text:SetPoint("BOTTOM", ChallengesKeystoneFrame, "BOTTOM", 0, 180)
+				text:SetSize(300, 30)
+				text:SetJustifyH("CENTER")
+			end
+			text:SetText("")
 			if db.profile.autoSlotKeystone and not HasSlottedKeystone() then
 				local _, _, _, _, _, _, _, instanceID = BigWigsLoader.GetInstanceInfo()
 				if GetOwnedKeystoneMapID() == instanceID then
@@ -780,6 +821,7 @@ do
 						for currentSlot = 1, slots do
 							local itemLink = GetContainerItemLink(currentBag, currentSlot)
 							if itemLink and itemLink:find("Hkeystone", nil, true) then
+								text:SetText(L.keystoneAutoSlotFrame)
 								PickupContainerItem(currentBag, currentSlot)
 								SlotKeystone()
 								BigWigsLoader.Print(L.keystoneAutoSlotMessage:format(itemLink))
@@ -796,6 +838,15 @@ do
 		DeselectTab(tab2)
 		DeselectTab(tab3)
 		DeselectTab(tab4)
+
+		if db.profile.showViewerTeleportTip then
+			for _, teleportSpellID in next, teleportList[1] do
+				if BigWigsLoader.IsSpellKnownOrInSpellBook(teleportSpellID) then
+					mainPanel.tip:Show() -- Don't show tip unless we know 1 teleport spell
+					break
+				end
+			end
+		end
 
 		local partyHeader = CreateHeader()
 		partyHeader:SetText(L.keystoneHeaderParty)
@@ -868,7 +919,7 @@ do
 				local _, _, diffID = BigWigsLoader.GetInstanceInfo()
 				if diffID == 8 or diffID == 23 then -- Mythic+, Mythic
 					TimerTracker:UnregisterEvent("START_TIMER")
-					BigWigsLoader.CTimerAfter(1, function()
+					BigWigsLoader.CTimerAfter(5, function()
 						TimerTracker:RegisterEvent("START_TIMER")
 						self:UnregisterEvent("CHALLENGE_MODE_START")
 					end)
@@ -1091,7 +1142,7 @@ do
 		olderHeader:SetPoint("TOP", thisWeekHeader, "BOTTOM", 0, -50) -- Make sure the header shows even with no runs
 
 		-- Begin Display of history
-		local runs = C_MythicPlus.GetRunHistory(true, true)
+		local runs = C_MythicPlus.GetRunHistory(true, true, true)
 		local tableSize = #runs
 		local runsThisWeek, olderRuns = 0, 0
 		local scoreThisWeek, olderScore = 0, 0
@@ -1124,38 +1175,38 @@ do
 		local cellRunsThisWeek, cellScoreThisWeek = CreateCell(), CreateCell()
 		cellRunsThisWeek:SetPoint("RIGHT", cellScoreThisWeek, "LEFT", -6, 0)
 		cellScoreThisWeek:SetPoint("TOPLEFT", thisWeekHeader, "CENTER", 3, -12)
-		cellRunsThisWeek:SetWidth(120)
+		cellRunsThisWeek:SetWidth(135)
 		cellRunsThisWeek.text:SetText(L.keystoneHistoryRuns:format(runsThisWeek))
 		cellRunsThisWeek.tooltip = L.keystoneHistoryRunsThisWeekTooltip:format(runsThisWeek)
-		cellScoreThisWeek:SetWidth(120)
+		cellScoreThisWeek:SetWidth(135)
 		cellScoreThisWeek.text:SetText(L.keystoneHistoryScore:format(scoreThisWeek))
 		cellScoreThisWeek.tooltip = L.keystoneHistoryScoreThisWeekTooltip:format(scoreThisWeek)
 
 		local cellRunsOlder, cellScoreOlder = CreateCell(), CreateCell()
 		cellRunsOlder:SetPoint("RIGHT", cellScoreOlder, "LEFT", -6, 0)
 		cellScoreOlder:SetPoint("TOPLEFT", olderHeader, "CENTER", 3, -12)
-		cellRunsOlder:SetWidth(120)
+		cellRunsOlder:SetWidth(135)
 		cellRunsOlder.text:SetText(L.keystoneHistoryRuns:format(olderRuns))
 		cellRunsOlder.tooltip = L.keystoneHistoryRunsOlderTooltip:format(olderRuns)
-		cellScoreOlder:SetWidth(120)
+		cellScoreOlder:SetWidth(135)
 		cellScoreOlder.text:SetText(L.keystoneHistoryScore:format(olderScore))
 		cellScoreOlder.tooltip = L.keystoneHistoryScoreOlderTooltip:format(olderScore)
 
 		local firstOldRun = false
-		local prevMapName, prevLevel, prevScore, prevGainedScore, prevInTime = nil, nil, nil, nil, nil
+		local prevDate, prevMapName, prevLevel, prevGainedScore, prevInTime = nil, nil, nil, nil, nil
 		for i = tableSize, 1, -1 do
-			local cellMapName, cellLevel, cellScore, cellGainedScore, cellInTime = CreateCell(), CreateCell(), CreateCell(), CreateCell(), CreateCell()
+			local cellDate, cellMapName, cellLevel, cellGainedScore, cellInTime = CreateCell(), CreateCell(), CreateCell(), CreateCell(), CreateCell()
 			if runs[i].thisWeek then
 				if i == tableSize then
-					cellMapName:SetPoint("TOPLEFT", cellRunsThisWeek, "BOTTOMLEFT", 0, -12)
+					cellDate:SetPoint("TOPLEFT", cellRunsThisWeek, "BOTTOMLEFT", 0, -12)
+					cellMapName:SetPoint("LEFT", cellDate, "RIGHT", 6, 0)
 					cellLevel:SetPoint("LEFT", cellMapName, "RIGHT", 6, 0)
-					cellScore:SetPoint("LEFT", cellLevel, "RIGHT", 6, 0)
-					cellGainedScore:SetPoint("LEFT", cellScore, "RIGHT", 6, 0)
+					cellGainedScore:SetPoint("LEFT", cellLevel, "RIGHT", 6, 0)
 					cellInTime:SetPoint("LEFT", cellGainedScore, "RIGHT", 6, 0)
 				else
+					cellDate:SetPoint("TOP", prevDate, "BOTTOM", 0, -6)
 					cellMapName:SetPoint("TOP", prevMapName, "BOTTOM", 0, -6)
 					cellLevel:SetPoint("TOP", prevLevel, "BOTTOM", 0, -6)
-					cellScore:SetPoint("TOP", prevScore, "BOTTOM", 0, -6)
 					cellGainedScore:SetPoint("TOP", prevGainedScore, "BOTTOM", 0, -6)
 					cellInTime:SetPoint("TOP", prevInTime, "BOTTOM", 0, -6)
 				end
@@ -1168,36 +1219,68 @@ do
 						local y = 50 + runsThisWeek*26
 						olderHeader:SetPoint("TOP", thisWeekHeader, "BOTTOM", 0, -y)
 					end
-					cellMapName:SetPoint("TOPLEFT", cellRunsOlder, "BOTTOMLEFT", 0, -12)
+					cellDate:SetPoint("TOPLEFT", cellRunsOlder, "BOTTOMLEFT", 0, -12)
+					cellMapName:SetPoint("LEFT", cellDate, "RIGHT", 6, 0)
 					cellLevel:SetPoint("LEFT", cellMapName, "RIGHT", 6, 0)
-					cellScore:SetPoint("LEFT", cellLevel, "RIGHT", 6, 0)
-					cellGainedScore:SetPoint("LEFT", cellScore, "RIGHT", 6, 0)
+					cellGainedScore:SetPoint("LEFT", cellLevel, "RIGHT", 6, 0)
 					cellInTime:SetPoint("LEFT", cellGainedScore, "RIGHT", 6, 0)
 				else
+					cellDate:SetPoint("TOP", prevDate, "BOTTOM", 0, -6)
 					cellMapName:SetPoint("TOP", prevMapName, "BOTTOM", 0, -6)
 					cellLevel:SetPoint("TOP", prevLevel, "BOTTOM", 0, -6)
-					cellScore:SetPoint("TOP", prevScore, "BOTTOM", 0, -6)
 					cellGainedScore:SetPoint("TOP", prevGainedScore, "BOTTOM", 0, -6)
 					cellInTime:SetPoint("TOP", prevInTime, "BOTTOM", 0, -6)
 				end
 			end
 
-			cellMapName:SetWidth(WIDTH_MAP+24)
+			local challengeMapName, _, timeLimit = GetMapUIInfo(runs[i].mapChallengeModeID)
+			cellDate:SetWidth(WIDTH_RATING+13)
+			if runs[i].thisWeek then
+				cellDate.text:SetText("---")
+			else
+				cellDate.text:SetText("00/00")
+			end
+			cellDate.tooltip = "Date will be available after patch 11.2.5"
+			cellMapName:SetWidth(WIDTH_MAP)
 			cellMapName.text:SetText(dungeonNamesTiny[runs[i].mapChallengeModeID] or runs[i].mapChallengeModeID)
-			cellMapName.tooltip = L.keystoneMapTooltip:format(GetMapUIInfo(runs[i].mapChallengeModeID) or "-")
+			cellMapName.tooltip = L.keystoneMapTooltip:format(challengeMapName or "-")
 			cellLevel:SetWidth(WIDTH_LEVEL)
 			cellLevel.text:SetText(runs[i].level)
 			cellLevel.tooltip = L.keystoneLevelTooltip:format(runs[i].level)
-			cellScore:SetWidth(WIDTH_RATING)
-			cellScore.text:SetText(runs[i].runScore)
-			cellScore.tooltip = L.keystoneScoreTooltip:format(runs[i].runScore)
 			cellGainedScore:SetWidth(WIDTH_RATING)
-			cellGainedScore.text:SetText("+".. runs[i].gained)
-			cellGainedScore.tooltip = L.keystoneScoreGainedTooltip:format(runs[i].gained)
-			cellInTime:SetWidth(WIDTH_LEVEL)
-			cellInTime.text:SetText(runs[i].completed and "|T136814:0|t" or "|T136813:0|t")
-			cellInTime.tooltip = runs[i].completed and L.keystoneCompletedTooltip or L.keystoneFailedTooltip
-			prevMapName, prevLevel, prevScore, prevGainedScore, prevInTime = cellMapName, cellLevel, cellScore, cellGainedScore, cellInTime
+			cellGainedScore.text:SetFormattedText("+%d", runs[i].gained)
+			cellGainedScore.tooltip = L.keystoneScoreGainedTooltip:format(runs[i].gained, runs[i].runScore)
+			cellInTime:SetWidth(WIDTH_RATING+15)
+			if runs[i].completed then
+				if (runs[i].durationSec or 0) > timeLimit then -- Was the time limit changed in a hotfix?
+					cellInTime.text:SetFormattedText(L.keystoneTimeUnder, 0, 0)
+				else
+					local diff = timeLimit - (runs[i].durationSec or timeLimit)
+					local minutesUnder = math.floor(diff / 60)
+					local secondsUnder = math.floor(diff - (minutesUnder*60))
+					cellInTime.text:SetFormattedText(L.keystoneTimeUnder, minutesUnder, secondsUnder)
+				end
+				local minutesTotal = math.floor((runs[i].durationSec or 0) / 60)
+				local secondsTotal = math.floor((runs[i].durationSec or 0) - (minutesTotal*60))
+				local minutesTimeLimit = math.floor(timeLimit / 60)
+				local secondsTimeLimit = math.floor(timeLimit - (minutesTimeLimit*60))
+				cellInTime.tooltip = (L.keystoneCompletedTooltip .. "\n" .. "Numbers will be available after patch 11.2.5"):format(minutesTotal, secondsTotal, minutesTimeLimit, secondsTimeLimit)
+			else
+				if (runs[i].durationSec or timeLimit) < timeLimit then -- Was the time limit changed in a hotfix?
+					cellInTime.text:SetFormattedText(L.keystoneTimeOver, 0, 0)
+				else
+					local diff = (runs[i].durationSec or timeLimit) - timeLimit
+					local minutesOver = math.floor(diff / 60)
+					local secondsOver = math.floor(diff - (minutesOver*60))
+					cellInTime.text:SetFormattedText(L.keystoneTimeOver, minutesOver, secondsOver)
+				end
+				local minutesTotal = math.floor((runs[i].durationSec or 0) / 60)
+				local secondsTotal = math.floor((runs[i].durationSec or 0) - (minutesTotal*60))
+				local minutesTimeLimit = math.floor(timeLimit / 60)
+				local secondsTimeLimit = math.floor(timeLimit - (minutesTimeLimit*60))
+				cellInTime.tooltip = (L.keystoneFailedTooltip .. "\n" .. "Numbers will be available after patch 11.2.5"):format(minutesTotal, secondsTotal, minutesTimeLimit, secondsTimeLimit)
+			end
+			prevDate, prevMapName, prevLevel, prevGainedScore, prevInTime = cellDate, cellMapName, cellLevel, cellGainedScore, cellInTime
 
 			if i == 1 then
 				-- Calculate scroll height
@@ -1214,7 +1297,6 @@ do
 		if spellID == 0 then
 			return ""
 		else
-			local spellName = BigWigsLoader.GetSpellName(spellID)
 			if not BigWigsLoader.IsSpellKnownOrInSpellBook(spellID) then
 				return L.keystoneClickToTeleportNotLearned
 			else
@@ -1238,6 +1320,47 @@ do
 				return a.rating > b.rating
 			else
 				return a.name < b.name
+			end
+		end
+	end
+
+	local ClickTeleportButton
+	do
+		local UnitCastingInfo = UnitCastingInfo
+		local function OnUpdateCheckTeleportCastStatus(self)
+			local _, _, _, startTimeMs, endTimeMs, _, _, _, spellId = UnitCastingInfo("player")
+			if spellId then
+				local teleportSpellID = self:GetAttribute("spell")
+				if spellId == teleportSpellID and mainPanel.teleportBar:GetParent() == self then
+					local startTimeSec = startTimeMs / 1000
+					local endTimeSec = endTimeMs / 1000
+					local castDuration = endTimeSec - startTimeSec
+					if castDuration > 0 then
+						local percentage = (GetTime() - startTimeSec) / castDuration
+						if percentage > 1 then percentage = 1 elseif percentage < 0 then percentage = 0 end
+						mainPanel.teleportBar:SetColorTexture(0, 0, 1, 0.6)
+						mainPanel.teleportBar:Show()
+						mainPanel.teleportBar:SetWidth(percentage * self:GetWidth())
+					end
+				end
+			elseif mainPanel.teleportBar:GetParent() == self then
+				mainPanel.teleportBar:Hide()
+			end
+		end
+
+		function ClickTeleportButton(self)
+			if not InCombatLockdown() then
+				mainPanel.teleportBar:ClearAllPoints()
+				mainPanel.teleportBar:SetParent(self)
+				mainPanel.teleportBar:SetPoint("TOPLEFT")
+				mainPanel.teleportBar:SetPoint("BOTTOMLEFT")
+				mainPanel.teleportBar:Hide()
+				mainPanel.teleportBar.name = self.playerName
+				self:SetScript("OnUpdate", OnUpdateCheckTeleportCastStatus)
+				if db.profile.showViewerTeleportTip then
+					db.profile.showViewerTeleportTip = false
+					mainPanel.tip:Hide()
+				end
 			end
 		end
 	end
@@ -1290,17 +1413,24 @@ do
 				cellRating:SetPoint("TOP", prevRating, "BOTTOM", 0, -6)
 			end
 			cellName:SetWidth(WIDTH_NAME)
-			cellName.text:SetText(sortedplayerList[i].decoratedName or sortedplayerList[i].name)
+			local playerName = sortedplayerList[i].name
+			cellName.text:SetText(sortedplayerList[i].decoratedName or playerName)
 			cellName.tooltip = sortedplayerList[i].nameTooltip
 			cellName:SetAttribute("type", "macro")
-			cellName:SetAttribute("macrotext", "/run ChatFrame_SendTell(\"".. sortedplayerList[i].name .."\")")
+			cellName:SetAttribute("macrotext", "/run ChatFrame_SendTell(\"".. playerName .."\")")
 			cellLevel:SetWidth(WIDTH_LEVEL)
 			cellLevel.text:SetText(sortedplayerList[i].level == -1 and hiddenIcon or sortedplayerList[i].level)
 			cellLevel.tooltip = sortedplayerList[i].levelTooltip
 			cellMap:SetWidth(WIDTH_MAP)
-			if sortedplayerList[i].mapID then
+			local teleportSpellID = teleportList[1][sortedplayerList[i].mapID]
+			if teleportSpellID and BigWigsLoader.IsSpellKnownOrInSpellBook(teleportSpellID) then
 				cellMap:SetAttribute("type", "spell")
-				cellMap:SetAttribute("spell", teleportList[1][sortedplayerList[i].mapID])
+				cellMap:SetAttribute("spell", teleportSpellID)
+				cellMap.playerName = playerName
+				cellMap:SetScript("PostClick", ClickTeleportButton)
+				if mainPanel.teleportBar.name == playerName then
+					ClickTeleportButton(cellMap)
+				end
 			end
 			cellMap.text:SetText(sortedplayerList[i].map)
 			cellMap.tooltip = sortedplayerList[i].mapTooltip
@@ -1332,7 +1462,11 @@ do
 		for i = 1, #guildCellsCurrentlyShowing do
 			local cell = guildCellsCurrentlyShowing[i]
 			cell:Hide()
+			cell:ClearAttributes()
+			cell:SetScript("PostClick", nil)
+			cell:SetScript("OnUpdate", nil)
 			cell.tooltip = nil
+			cell.playerName = nil
 			cell:ClearAllPoints()
 			cellsCurrentlyShowing[cell] = nil
 			cellsAvailable[#cellsAvailable+1] = cell
@@ -1750,7 +1884,7 @@ do
 		db.profile[key] = {r, g, b, a < 0.3 and 0.3 or a}
 		UpdateWidgets()
 	end
-	BigWigsAPI.SetToolOptionsTable("MythicPlus", {
+	BigWigsAPI.RegisterToolOptions("MythicPlus", {
 		type = "group",
 		childGroups = "tab",
 		name = L.keystoneModuleName,
@@ -1764,143 +1898,10 @@ do
 				width = "full",
 				fontSize = "large",
 			},
-			general = {
-				type = "group",
-				name = L.general,
-				order = 1,
-				args = {
-					autoSlotKeystone = {
-						type = "toggle",
-						name = L.keystoneAutoSlot,
-						desc = L.keystoneAutoSlotDesc,
-						order = 1,
-						width = "full",
-					},
-					spacer = {
-						type = "description",
-						name = "\n\n",
-						order = 2,
-						width = "full",
-					},
-					countdown = {
-						type = "group",
-						name = L.countdown,
-						order = 3,
-						inline = true,
-						width = "full",
-						args = {
-							countdownExplainer = {
-								type = "description",
-								name = L.keystoneCountdownExplainer,
-								order = 1,
-								width = "full",
-							},
-							countBegin = {
-								name = L.countdownBegins,
-								desc = L.keystoneCountdownBeginsDesc,
-								type = "range", min = 3, max = 9, step = 1,
-								order = 2,
-								width = 1
-							},
-							countVoice = {
-								name = L.countdownVoice,
-								type = "select",
-								values = BigWigsAPI.GetCountdownList,
-								sorting = voiceSorting,
-								order = 3,
-								width = 2,
-							},
-							countStartSound = {
-								type = "select",
-								name = L.keystoneCountdownBeginsSound,
-								order = 4,
-								get = soundGet,
-								set = soundSet,
-								values = LibSharedMedia:List("sound"),
-								width = 2.5,
-								itemControl = "DDI-Sound",
-							},
-							countEndSound = {
-								type = "select",
-								name = L.keystoneCountdownEndsSound,
-								order = 5,
-								get = soundGet,
-								set = soundSet,
-								values = LibSharedMedia:List("sound"),
-								width = 2.5,
-								itemControl = "DDI-Sound",
-							},
-						},
-					},
-				},
-			},
-			keystoneViewer = {
-				type = "group",
-				name = L.keystoneViewerTitle,
-				order = 2,
-				args = {
-					explainViewer = {
-						type = "description",
-						name = L.keystoneViewerExplainer,
-						order = 1,
-						width = "full",
-					},
-					openViewer = {
-						type = "execute",
-						name = L.keystoneViewerOpen,
-						func = ShowViewer,
-						order = 2,
-						width = 1.5,
-					},
-					spacerViewer = {
-						type = "description",
-						name = "\n\n",
-						order = 3,
-						width = "full",
-					},
-					showViewerDungeonEnd = {
-						type = "toggle",
-						name = L.keystoneAutoShowEndOfRun,
-						desc = L.keystoneAutoShowEndOfRunDesc,
-						order = 4,
-						width = "full",
-					},
-					hideFromGuild = {
-						type = "toggle",
-						name = L.keystoneHideGuildTitle,
-						desc = L.keystoneHideGuildDesc,
-						order = 5,
-						width = "full",
-						set = function(info, value)
-							local key = info[#info]
-							db.profile[key] = value
-							LibKeystone.SetGuildHidden(value)
-						end,
-						confirm = function(_, value)
-							if value then
-								return L.keystoneHideGuildWarning
-							end
-						end,
-					},
-					explainViewerKeybinding = {
-						type = "description",
-						name = L.keystoneViewerKeybindingExplainer,
-						order = 6,
-						width = "full",
-					},
-					viewerKeybind = {
-						type = "keybinding",
-						name = L.keybinding,
-						desc = L.keystoneViewerKeybindingDesc,
-						order = 7,
-						set = UpdateSettingsAndWidgets,
-					},
-				},
-			},
 			instanceKeys = {
 				type = "group",
 				name = L.instanceKeysTitle,
-				order = 3,
+				order = 1,
 				get = GetSettings,
 				set = UpdateSettingsAndWidgets,
 				args = {
@@ -2097,6 +2098,139 @@ do
 							end
 						end,
 						order = 15,
+					},
+				},
+			},
+			keystoneViewer = {
+				type = "group",
+				name = L.keystoneViewerTitle,
+				order = 2,
+				args = {
+					explainViewer = {
+						type = "description",
+						name = L.keystoneViewerExplainer,
+						order = 1,
+						width = "full",
+					},
+					openViewer = {
+						type = "execute",
+						name = L.keystoneViewerOpen,
+						func = ShowViewer,
+						order = 2,
+						width = 1.5,
+					},
+					spacerViewer = {
+						type = "description",
+						name = "\n\n",
+						order = 3,
+						width = "full",
+					},
+					showViewerDungeonEnd = {
+						type = "toggle",
+						name = L.keystoneAutoShowEndOfRun,
+						desc = L.keystoneAutoShowEndOfRunDesc,
+						order = 4,
+						width = "full",
+					},
+					hideFromGuild = {
+						type = "toggle",
+						name = L.keystoneHideGuildTitle,
+						desc = L.keystoneHideGuildDesc,
+						order = 5,
+						width = "full",
+						set = function(info, value)
+							local key = info[#info]
+							db.profile[key] = value
+							LibKeystone.SetGuildHidden(value)
+						end,
+						confirm = function(_, value)
+							if value then
+								return L.keystoneHideGuildWarning
+							end
+						end,
+					},
+					explainViewerKeybinding = {
+						type = "description",
+						name = L.keystoneViewerKeybindingExplainer,
+						order = 6,
+						width = "full",
+					},
+					viewerKeybind = {
+						type = "keybinding",
+						name = L.keybinding,
+						desc = L.keystoneViewerKeybindingDesc,
+						order = 7,
+						set = UpdateSettingsAndWidgets,
+					},
+				},
+			},
+			general = {
+				type = "group",
+				name = L.general,
+				order = 3,
+				args = {
+					autoSlotKeystone = {
+						type = "toggle",
+						name = L.keystoneAutoSlot,
+						desc = L.keystoneAutoSlotDesc,
+						order = 1,
+						width = "full",
+					},
+					spacer = {
+						type = "description",
+						name = "\n\n",
+						order = 2,
+						width = "full",
+					},
+					countdown = {
+						type = "group",
+						name = L.countdown,
+						order = 3,
+						inline = true,
+						width = "full",
+						args = {
+							countdownExplainer = {
+								type = "description",
+								name = L.keystoneCountdownExplainer,
+								order = 1,
+								width = "full",
+							},
+							countBegin = {
+								name = L.countdownBegins,
+								desc = L.keystoneCountdownBeginsDesc,
+								type = "range", min = 3, max = 9, step = 1,
+								order = 2,
+								width = 1
+							},
+							countVoice = {
+								name = L.countdownVoice,
+								type = "select",
+								values = BigWigsAPI.GetCountdownList,
+								sorting = voiceSorting,
+								order = 3,
+								width = 2,
+							},
+							countStartSound = {
+								type = "select",
+								name = L.keystoneCountdownBeginsSound,
+								order = 4,
+								get = soundGet,
+								set = soundSet,
+								values = LibSharedMedia:List("sound"),
+								width = 2.5,
+								itemControl = "DDI-Sound",
+							},
+							countEndSound = {
+								type = "select",
+								name = L.keystoneCountdownEndsSound,
+								order = 5,
+								get = soundGet,
+								set = soundSet,
+								values = LibSharedMedia:List("sound"),
+								width = 2.5,
+								itemControl = "DDI-Sound",
+							},
+						},
 					},
 				},
 			},

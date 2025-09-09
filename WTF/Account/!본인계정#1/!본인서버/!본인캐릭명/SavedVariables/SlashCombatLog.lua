@@ -1,4 +1,0 @@
-
-SlashCombatLogDB = {
-	["logging"] = false,
-}

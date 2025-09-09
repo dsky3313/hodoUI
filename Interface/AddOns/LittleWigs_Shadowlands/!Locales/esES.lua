@@ -167,8 +167,8 @@ end
 
 L = BigWigs:NewBossLocale("Myza's Oasis", "esES")
 if L then
-	--L.notes = "Notes"
-	--L.notes_desc = "Show a message when the notes are available. Hit the notes with your instrument's ability to gain 'Jazzy'.\n\n|T237554:16|tJazzy\n{348567}"
+	L.notes = "Notas"
+	L.notes_desc = "Muestra un mensaje cuando las notas estén disponibles. Alcanza las notas con la habilidad de tu instrumento para obtener 'Dándolo todo'.\n\n|T237554:16|tDándolo todo\n{348567}"
 end
 
 L = BigWigs:NewBossLocale("So'leah", "esES")
@@ -207,6 +207,7 @@ if L then
 	L.tracker_zokorss = "Rastreador Zo'korss"
 	L.ancient_core_hound = "Can del Núcleo anciano"
 	L.enraged_direhorn = "Cuernoatroz iracundo"
+	L.frenzied_nightclaw = "Garranoche enloquecido"
 	L.cartel_skulker = "Vagador del cártel"
 	L.cartel_wiseguy = "Mafioso del cártel"
 	L.cartel_muscle = "Matón del cártel"
@@ -220,10 +221,9 @@ if L then
 	L.commerce_enforcer = "Déspota comercial"
 	L.commander_zofar = "Comandante Zo'far"
 
-	L.tazavesh_soleahs_gambit = "Tazavesh: Gambito de So'leah"
-	--L.hylbrande_warmup_trigger = "See how your wisdom fares against the might of the titans."
-	--L.portal_open = "Portal opens"
-	--L.portal_open_desc = "Show a bar indicating when the portal to the next area will open."
+	L.hylbrande_warmup_trigger = "A ver cómo le va a tu sabiduría contra el poder de los titanes."
+	L.portal_open = "Portal abierto"
+	L.portal_open_desc = "Muestra una barra que indica cuándo se abrirá el portal a la siguiente zona."
 	L.murkbrine_scalebinder = "Sujetascamas Salmuerasucia"
 	L.murkbrine_fishmancer = "Piscimante Salmuerasucia"
 	L.murkbrine_shellcrusher = "Rompeconchas Salmuerasucia"

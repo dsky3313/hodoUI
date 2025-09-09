@@ -1,0 +1,14 @@
+## Interface: 100002
+## Title:|cffff00ffReflux|r
+## Notes: Addon to switch all your AceDB profiles via slash command. This tool also allows you to emulate profiles for non AceDB addons.
+## DefaultState: enabled
+## Author: snichols1122
+## Version: 9.2.5
+## X-Category: Miscellaneous
+## X-eMail: snichols7778@gmail.com
+## Battletag: Gator#1210
+## In-Game: Gatorsniper-Area52 (US) Horde
+## SavedVariables: RefluxDB
+## OptionalDeps: Ace2
+## X-WoWI-ID: 12811
+Reflux.lua

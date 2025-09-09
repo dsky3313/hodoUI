@@ -537,9 +537,17 @@ L["RAID_BOSS_SOD_9"] = "Kel'Thuzad"
 --[[Translation missing --]]
 --[[ L["RAID_BOSS_ToES_1"] = ""--]] 
 --[[Translation missing --]]
+--[[ L["RAID_BOSS_TOES_1"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["RAID_BOSS_TOES_2"] = ""--]] 
+--[[Translation missing --]]
 --[[ L["RAID_BOSS_ToES_2"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["RAID_BOSS_ToES_3"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["RAID_BOSS_TOES_3"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["RAID_BOSS_TOES_4"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["RAID_BOSS_ToES_4"] = ""--]] 
 L["RAID_BOSS_TOTFW_1"] = "El Cónclave del Viento"
@@ -591,6 +599,8 @@ L["RAID_NP"] = "Palacio Nerub'ar - NP"
 L["RAID_RS"] = "El Sagrario Rubí - RS"
 --[[Translation missing --]]
 --[[ L["RAID_ToES"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["RAID_TOES"] = ""--]] 
 L["RAID_TOTFW"] = "Trono de los Cuatro Vientos - TOTFW"
 L["RAIDERIO_AVERAGE_PLAYER_SCORE"] = "Puntuación media de +%s en tiempo"
 L["RAIDERIO_BEST_RUN"] = "Mejor resultado M+ de Raider.IO"

@@ -420,9 +420,17 @@ L["RAID_BOSS_SOD_9"] = "Kel'Thuzad"
 --[[Translation missing --]]
 --[[ L["RAID_BOSS_ToES_1"] = ""--]] 
 --[[Translation missing --]]
+--[[ L["RAID_BOSS_TOES_1"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["RAID_BOSS_TOES_2"] = ""--]] 
+--[[Translation missing --]]
 --[[ L["RAID_BOSS_ToES_2"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["RAID_BOSS_ToES_3"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["RAID_BOSS_TOES_3"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["RAID_BOSS_TOES_4"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["RAID_BOSS_ToES_4"] = ""--]] 
 L["RAID_BOSS_TOTFW_1"] = "O Conclave do Vento"
@@ -464,6 +472,8 @@ L["RAID_MSV"] = "Galerias Mogu'shan"
 L["RAID_NP"] = "Palácio Nerub-ar"
 L["RAID_RS"] = "Santuário Rubi"
 L["RAID_ToES"] = "Terraço da Primavera Eterna"
+--[[Translation missing --]]
+--[[ L["RAID_TOES"] = ""--]] 
 L["RAID_TOTFW"] = "Trono dos Quatro Ventos"
 L["RAIDERIO_AVERAGE_PLAYER_SCORE"] = "Pontuações Médias para Runs Dentro do Tempo +%s"
 L["RAIDERIO_BEST_RUN"] = "Raider.IO Melhor Mítica+"

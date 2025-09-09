@@ -452,9 +452,17 @@ L["RAID_BOSS_SOD_9"] = "克尔苏加德"
 --[[Translation missing --]]
 --[[ L["RAID_BOSS_ToES_1"] = ""--]] 
 --[[Translation missing --]]
+--[[ L["RAID_BOSS_TOES_1"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["RAID_BOSS_TOES_2"] = ""--]] 
+--[[Translation missing --]]
 --[[ L["RAID_BOSS_ToES_2"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["RAID_BOSS_ToES_3"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["RAID_BOSS_TOES_3"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["RAID_BOSS_TOES_4"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["RAID_BOSS_ToES_4"] = ""--]] 
 L["RAID_BOSS_TOTFW_1"] = "风之议会"
@@ -498,6 +506,8 @@ L["RAID_NP"] = "尼鲁巴尔王宫"
 L["RAID_RS"] = "红玉圣所"
 --[[Translation missing --]]
 --[[ L["RAID_ToES"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["RAID_TOES"] = ""--]] 
 L["RAID_TOTFW"] = "风神王座"
 L["RAIDERIO_AVERAGE_PLAYER_SCORE"] = "能限时%s层的平均分数"
 L["RAIDERIO_BEST_RUN"] = "大秘境最佳成绩"

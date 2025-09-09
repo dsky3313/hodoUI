@@ -60,6 +60,7 @@ BigWigs:AddColors("Ara-Kara, City of Echoes Trash", {
 	[434824] = "orange",
 	[434830] = "blue",
 	[436614] = {"blue","orange"},
+	[438618] = {"blue","yellow"},
 	[438826] = {"blue","yellow"},
 	[438877] = "cyan",
 	[439208] = "green",
@@ -79,6 +80,7 @@ BigWigs:AddSounds("Ara-Kara, City of Echoes Trash", {
 	[434824] = "alarm",
 	[434830] = "underyou",
 	[436614] = "warning",
+	[438618] = "alert",
 	[438826] = {"alert","underyou"},
 	[438877] = "info",
 	[439208] = "info",
@@ -435,6 +437,7 @@ BigWigs:AddColors("Azhiccar", {
 	[1217446] = "blue",
 	[1217664] = "purple",
 	[1227745] = {"blue","orange"},
+	[1231811] = "green",
 })
 
 BigWigs:AddSounds("Azhiccar", {
@@ -444,6 +447,7 @@ BigWigs:AddSounds("Azhiccar", {
 	[1217446] = "underyou",
 	[1217664] = "warning",
 	[1227745] = "alarm",
+	[1231811] = "info",
 })
 
 BigWigs:AddColors("Taah'bat and A'wazj", {
@@ -556,7 +560,7 @@ BigWigs:AddColors("Demolition Duo", {
 	[459779] = {"blue","green","red"},
 	[459799] = "purple",
 	[460602] = {"blue","yellow"},
-	[460867] = "yellow",
+	[460867] = {"green","yellow"},
 	[470090] = "cyan",
 	[473690] = {"blue","orange"},
 	[1217653] = "orange",
@@ -566,7 +570,7 @@ BigWigs:AddSounds("Demolition Duo", {
 	[459779] = {"alarm","info"},
 	[459799] = "alert",
 	[460602] = "alert",
-	[460867] = "long",
+	[460867] = {"info","long"},
 	[470090] = "long",
 	[473690] = {"alarm","info"},
 	[1217653] = "alarm",

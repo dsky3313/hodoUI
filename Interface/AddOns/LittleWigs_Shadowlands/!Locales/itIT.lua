@@ -207,6 +207,7 @@ if L then
 	L.tracker_zokorss = "Braccatore Zo'korss"
 	L.ancient_core_hound = "Segugio del Nucleo Antico"
 	L.enraged_direhorn = "Cornofurente Rabbioso"
+	L.frenzied_nightclaw = "Zannacupa Frenetica"
 	--L.cartel_skulker = "Cartel Skulker"
 	--L.cartel_wiseguy = "Cartel Wiseguy"
 	L.cartel_muscle = "Forzuto del Cartello"
@@ -220,7 +221,6 @@ if L then
 	L.commerce_enforcer = "Esecutore del Commercio"
 	L.commander_zofar = "Comandante Zo'far"
 
-	L.tazavesh_soleahs_gambit = "Tazavesh: Azzardo di So'leah"
 	--L.hylbrande_warmup_trigger = "See how your wisdom fares against the might of the titans."
 	--L.portal_open = "Portal opens"
 	--L.portal_open_desc = "Show a bar indicating when the portal to the next area will open."

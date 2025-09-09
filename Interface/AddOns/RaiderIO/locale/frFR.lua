@@ -42,7 +42,7 @@ L["CHARACTER_LF_GUILD_RAID_HEROIC"] = "Cherche une guilde pour les raids héroï
 L["CHARACTER_LF_GUILD_RAID_MYTHIC"] = "Cherche une guilde pour les raids mythiques"
 L["CHARACTER_LF_GUILD_RAID_NORMAL"] = "Cherche une guilde pour les raids « normal »"
 L["CHARACTER_LF_GUILD_SOCIAL"] = "Cherche une guilde pour discuter"
-L["CHARACTER_LF_TEAM_MPLUS_DEFAULT"] = "Cherche une équipe Mythique +"
+L["CHARACTER_LF_TEAM_MPLUS_DEFAULT"] = "Cherche une équipe Mythique+"
 L["CHARACTER_LF_TEAM_MPLUS_WITH_SCORE"] = "Recherche de %d+ équipe(s) Mythique+"
 L["CHECKBOX_DISPLAY_WEEKLY"] = "Hebdomadaire"
 L["CHOOSE_HEADLINE_HEADER"] = "Titre de l'info-bulle Mythique+"
@@ -92,8 +92,7 @@ L["DUNGEON_SHORT_NAME_FLOOD"] = "OVo"
 L["DUNGEON_SHORT_NAME_GB"] = "GB"
 --[[Translation missing --]]
 --[[ L["DUNGEON_SHORT_NAME_GD"] = ""--]] 
---[[Translation missing --]]
---[[ L["DUNGEON_SHORT_NAME_GMBT"] = ""--]] 
+L["DUNGEON_SHORT_NAME_GMBT"] = "Strat"
 L["DUNGEON_SHORT_NAME_HOA"] = "SdE"
 --[[Translation missing --]]
 --[[ L["DUNGEON_SHORT_NAME_HOI"] = ""--]] 
@@ -128,8 +127,7 @@ L["DUNGEON_SHORT_NAME_SIEGE"] = "SIEGE"
 L["DUNGEON_SHORT_NAME_SOA"] = "FdA"
 --[[Translation missing --]]
 --[[ L["DUNGEON_SHORT_NAME_SOTS"] = ""--]] 
---[[Translation missing --]]
---[[ L["DUNGEON_SHORT_NAME_STRT"] = ""--]] 
+L["DUNGEON_SHORT_NAME_STRT"] = "Rues"
 L["DUNGEON_SHORT_NAME_SV"] = "CAVE"
 --[[Translation missing --]]
 --[[ L["DUNGEON_SHORT_NAME_TD"] = ""--]] 
@@ -159,8 +157,8 @@ L["ENABLE_LFG_EXPORT_BUTTON"] = "Afficher le bouton d'export dans la Recherche d
 L["ENABLE_LFG_EXPORT_BUTTON_DESC"] = "Affiche un bouton en forme de loupe en bas de la fenêtre de Recherche de groupe. Il va exporter votre groupe actuel ainsi que les postulants en file d'attente pour pouvoir les coller dans Raider.IO et pour inspecter le profil de chacun."
 L["ENABLE_LOCK_PROFILE_FRAME"] = "Verrouiller le cadre de profil Raider.IO"
 L["ENABLE_LOCK_PROFILE_FRAME_DESC"] = "Empêche le déplacement du cadre de profil M+. Cela n'a aucun effet si le cadre de profil M+ est configuré pour être positionné automatiquement."
-L["ENABLE_NO_SCORE_COLORS"] = "Désactiver les couleurs de score"
-L["ENABLE_NO_SCORE_COLORS_DESC"] = "Tous les scores seront affichés en blanc."
+L["ENABLE_NO_SCORE_COLORS"] = "Désactiver toutes les couleurs de score M+"
+L["ENABLE_NO_SCORE_COLORS_DESC"] = "Désactive la colorisation des scores. Tous les scores seront affichés en blanc."
 L["ENABLE_RAIDERIO_CLIENT_ENHANCEMENTS"] = "Autoriser les améliorations du client Raider.IO"
 L["ENABLE_RAIDERIO_CLIENT_ENHANCEMENTS_DESC"] = "L'activation de cette option vous permettra d'afficher les données détaillées du profil Raider.IO téléchargées à partir du client Raider.IO pour vos personnages revendiqués."
 L["ENABLE_REPLAY"] = "Afficher le système de rediffusion Mythique+"
@@ -173,9 +171,9 @@ L["ENABLE_SIMPLE_SCORE_COLORS_DESC"] = "Affiche uniquement les scores avec des c
 L["ENTER_REALM_AND_CHARACTER"] = "Entrez le serveur et le nom du personnage :"
 L["EXPORTJSON_COPY_TEXT"] = "Copiez ce qui suit et collez-le n'importe où sur |cff00C8FFhttps://raider.io|r pour rechercher tous les joueurs."
 L["GENERAL_TOOLTIP_OPTIONS"] = "Options générales des info-bulles"
-L["GUILD_BEST_SEASON"] = "Guilde: Top Saison"
+L["GUILD_BEST_SEASON"] = "Guilde : Meilleure saison"
 L["GUILD_BEST_TITLE"] = "Enregistrements Raider.IO"
-L["GUILD_BEST_WEEKLY"] = "Guilde : Top Semaine"
+L["GUILD_BEST_WEEKLY"] = "Guilde : Meilleure semaine"
 L["GUILD_LF_MPLUS_DEFAULT"] = "Recruter des joueurs Mythique +"
 L["GUILD_LF_MPLUS_WITH_SCORE"] = "Recrutement de %d+ joueur(s) pour Mythique+"
 L["GUILD_LF_PVP"] = "Recruter des joueurs JcJ"
@@ -187,8 +185,8 @@ L["GUILD_LF_SOCIAL"] = "Recrutement de joueur"
 L["HEALER"] = "Soigneur"
 L["HIDE_OWN_PROFILE"] = "Masquer l’info-bulle du profil personnel Raider.IO"
 L["HIDE_OWN_PROFILE_DESC"] = "Une fois défini, cela n'affichera pas votre propre info-bulle de profil Raider.IO, mais pourra afficher celle des autres joueurs s'ils en ont une."
-L["INVERSE_PROFILE_MODIFIER"] = "Inverser le modificateur de l'info bulle"
-L["INVERSE_PROFILE_MODIFIER_DESC"] = "Activer cette option va inverser le comportement de l'info-bulle lorsque l'on utilise les touches (shift/ctrl/alt)."
+L["INVERSE_PROFILE_MODIFIER"] = "Inverser le modificateur d'info-bulle du profil Raider.IO"
+L["INVERSE_PROFILE_MODIFIER_DESC"] = "Activer cette option inversera le comportement du modificateur d'info-bulle du profil Raider.IO (Maj / Ctrl / Alt) : maintenez-le enfoncé pour basculer la vue entre le profil Personnel / Leader ou le profil Leader / Personnel."
 --[[Translation missing --]]
 --[[ L["LOCALE_NAME"] = ""--]] 
 L["LOCKING_PROFILE_FRAME"] = "Raider.IO : Verrouillage du cadre de profil M+."
@@ -434,13 +432,21 @@ L["RAID_BOSS_SOD_7"] = "Gardien des Fondateurs"
 L["RAID_BOSS_SOD_8"] = "Scribe du destin Roh-Kalo"
 L["RAID_BOSS_SOD_9"] = "Kel’Thuzad"
 --[[Translation missing --]]
+--[[ L["RAID_BOSS_TOES_1"] = ""--]] 
+--[[Translation missing --]]
 --[[ L["RAID_BOSS_ToES_1"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["RAID_BOSS_ToES_2"] = ""--]] 
 --[[Translation missing --]]
+--[[ L["RAID_BOSS_TOES_2"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["RAID_BOSS_TOES_3"] = ""--]] 
+--[[Translation missing --]]
 --[[ L["RAID_BOSS_ToES_3"] = ""--]] 
 --[[Translation missing --]]
 --[[ L["RAID_BOSS_ToES_4"] = ""--]] 
+--[[Translation missing --]]
+--[[ L["RAID_BOSS_TOES_4"] = ""--]] 
 L["RAID_BOSS_TOTFW_1"] = "Conclave du Vent"
 L["RAID_BOSS_TOTFW_2"] = "Al’Akir"
 L["RAID_BOSS_VOTI_1"] = "Eranog"
@@ -479,6 +485,8 @@ L["RAID_MSV"] = "Caveaux Mogu’shan"
 L["RAID_NP"] = "Palais des Nérub’ar"
 L["RAID_RS"] = "Le sanctum Rubis"
 L["RAID_ToES"] = "Terrasse Printanière"
+--[[Translation missing --]]
+--[[ L["RAID_TOES"] = ""--]] 
 L["RAID_TOTFW"] = "Trône des quatre vents"
 L["RAIDERIO_AVERAGE_PLAYER_SCORE"] = "Moy. de score Raider.IO sur des +%s"
 L["RAIDERIO_BEST_RUN"] = "Meilleur donjon M+ Raider.IO"

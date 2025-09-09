@@ -16,8 +16,8 @@ mod:RegisterEnableMob(
 	179334, -- Portalmancer Zo'honn
 	179837, -- Tracker Zo'korss
 	180091, -- Ancient Core Hound
-	180567, -- Frenzied Nightclaw
 	180495, -- Enraged Direhorn
+	180567, -- Frenzied Nightclaw
 	179893, -- Cartel Skulker
 	180336, -- Cartel Wiseguy
 	180348, -- Cartel Muscle
@@ -86,6 +86,7 @@ if L then
 	L.tracker_zokorss = "Tracker Zo'korss"
 	L.ancient_core_hound = "Ancient Core Hound"
 	L.enraged_direhorn = "Enraged Direhorn"
+	L.frenzied_nightclaw = "Frenzied Nightclaw"
 	L.cartel_skulker = "Cartel Skulker"
 	L.cartel_wiseguy = "Cartel Wiseguy"
 	L.cartel_muscle = "Cartel Muscle"
@@ -100,7 +101,6 @@ if L then
 	L.commander_zofar = "Commander Zo'far"
 
 	------ So'leah's Gambit ------
-	L.tazavesh_soleahs_gambit = "Tazavesh: So'leah's Gambit"
 	L.hylbrande_warmup_trigger = "See how your wisdom fares against the might of the titans."
 	L.portal_open = "Portal opens"
 	L.portal_open_desc = "Show a bar indicating when the portal to the next area will open."
@@ -162,6 +162,8 @@ function mod:GetOptions()
 		-- Enraged Direhorn
 		{357512, "SAY", "NAMEPLATE"}, -- Frenzied Charge
 		{357508, "NAMEPLATE"}, -- Wild Thrash
+		-- Frenzied Nightclaw
+		{357828, "NAMEPLATE"}, -- Frantic Leap
 		-- Cartel Skulker
 		{355830, "NAMEPLATE"}, -- Quickblade
 		-- Cartel Wiseguy
@@ -220,6 +222,38 @@ function mod:GetOptions()
 		-- Focused Ritualist
 		{357260, "NAMEPLATE"}, -- Unstable Rift
 	}, {
+		{
+			tabName = self:BossName(2437), -- Zo'phex the Sentinel
+			{352796, 356548, 355900, 355888, 355891, 355915, 356001, 355934, 355980, 356537},
+		},
+		{
+			tabName = self:BossName(2454), -- The Grand Menagerie
+			{"custom_on_portal_autotalk", 356929, 356942, 356404, 356407, 357512, 357508, 357828},
+		},
+		{
+			tabName = self:BossName(2436), -- Mailroom Mayhem
+			{"custom_on_portal_autotalk", 347721, 347775, 347716},
+		},
+		{
+			tabName = self:BossName(2452), -- Myza's Oasis
+			{"custom_on_portal_autotalk", "trading_game", "custom_on_trading_game_autotalk", 355830, 357197, 356967, 357229, 357029, 1240821, 1240912},
+		},
+		{
+			tabName = self:BossName(2451), -- So'azmi
+			{355640, 355637, 355642, 1244443, 355477, 355479, 355473},
+		},
+		{
+			tabName = self:BossName(2448), -- Hylbrande
+			{"portal_open", 358443, 355132, 355234, 355057, 355048, 355429, 355464, 355584, 355577},
+		},
+		{
+			tabName = self:BossName(2449), -- Timecap'n Hooktail
+			{"portal_open", 356133, 1244650, 368661},
+		},
+		{
+			tabName = self:BossName(2455), -- So'leah
+			{357226, 357238, 357260},
+		},
 		------ Streets of Wonder ------
 		["custom_on_portal_autotalk"] = L.portal_authority,
 		["trading_game"] = L.trading_game,
@@ -232,6 +266,7 @@ function mod:GetOptions()
 		[356929] = L.tracker_zokorss,
 		[356404] = L.ancient_core_hound,
 		[357512] = L.enraged_direhorn,
+		[357828] = L.frenzied_nightclaw,
 		[355830] = L.cartel_skulker,
 		[357197] = L.cartel_wiseguy,
 		[356967] = L.cartel_muscle,
@@ -245,7 +280,7 @@ function mod:GetOptions()
 		[1244443] = L.commerce_enforcer,
 		[355479] = L.commander_zofar,
 		------ So'leah's Gambit ------
-		["portal_open"] = L.tazavesh_soleahs_gambit,
+		["portal_open"] = CL.general,
 		[355132] = L.murkbrine_scalebinder,
 		[355234] = L.murkbrine_fishmancer,
 		[355057] = L.murkbrine_shellcrusher,
@@ -328,6 +363,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FrenziedCharge", 357512)
 	self:Log("SPELL_CAST_START", "WildThrash", 357508)
 	self:Death("EnragedDirehornDeath", 180495)
+
+	-- Frenzied Nightclaw
+	self:RegisterEngageMob("FrenziedNightclawEngaged", 180567)
+	self:Death("FrenziedNightclawDeath", 180567)
 
 	-- Cartel Skulker
 	self:RegisterEngageMob("CartelSkulkerEngaged", 179893)
@@ -588,8 +627,8 @@ do
 		if timer then
 			self:CancelTimer(timer)
 		end
-		self:CDBar(352796, 9.6) -- Proxy Strike
-		self:Nameplate(352796, 9.6, guid) -- Proxy Strike
+		self:CDBar(352796, 8.3) -- Proxy Strike
+		self:Nameplate(352796, 8.3, guid) -- Proxy Strike
 		self:CDBar(356548, 13.2) -- Radiant Pulse
 		self:Nameplate(356548, 13.2, guid) -- Radiant Pulse
 		timer = self:ScheduleTimer("GatewardenZomazzDeath", 20, nil, guid)
@@ -1023,6 +1062,16 @@ do
 		self:StopBar(357508) -- Wild Thrash
 		self:ClearNameplate(guidFromTimer or args.destGUID)
 	end
+end
+
+-- Frenzied Nightclaw
+
+function mod:FrenziedNightclawEngaged(guid)
+	self:Nameplate(357828, 5.5, guid) -- Frantic Leap
+end
+
+function mod:FrenziedNightclawDeath(args)
+	self:ClearNameplate(args.destGUID)
 end
 
 -- Cartel Skulker
@@ -1636,6 +1685,12 @@ do
 				prev = t
 				self:Message(spellId, "orange", nil, L["1244650_icon"])
 				self:PlaySound(spellId, "alarm")
+			end
+		elseif spellId == 357828 and castGUID ~= prevCast then -- Frantic Leap
+			prevCast = castGUID
+			local sourceGUID = self:UnitGUID(unit)
+			if sourceGUID then
+				self:Nameplate(spellId, 16.2, sourceGUID)
 			end
 		end
 	end

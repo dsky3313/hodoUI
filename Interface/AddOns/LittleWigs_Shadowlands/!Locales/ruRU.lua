@@ -207,6 +207,7 @@ if L then
 	L.tracker_zokorss = "Следопыт Зо'корсс"
 	L.ancient_core_hound = "Древняя гончая недр"
 	L.enraged_direhorn = "Разъяренный дикорог"
+	L.frenzied_nightclaw = "Разъяренный коготь ночи"
 	--L.cartel_skulker = "Cartel Skulker"
 	--L.cartel_wiseguy = "Cartel Wiseguy"
 	L.cartel_muscle = "Громила из картеля"
@@ -220,7 +221,6 @@ if L then
 	L.commerce_enforcer = "Охранитель коммерции"
 	L.commander_zofar = "Командир Зо'фар"
 
-	L.tazavesh_soleahs_gambit = "Тазавеш: гамбит Со'леи"
 	--L.hylbrande_warmup_trigger = "See how your wisdom fares against the might of the titans."
 	--L.portal_open = "Portal opens"
 	--L.portal_open_desc = "Show a bar indicating when the portal to the next area will open."

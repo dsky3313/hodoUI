@@ -313,7 +313,9 @@ function mod:OnEngage()
 	self:Bar(1229038, self:Mythic() and 10.5 or self:Easy() and 12.5 or 11.7, CL.count:format(self:SpellName(1229038), devourCount)) -- Devour
 	self:Bar(1230979, self:Mythic() and 31.5 or self:Easy() and 37.5 or 35.3, CL.count:format(CL.spread, darkMatterCount)) -- Dark Matter
 	self:Bar(1243690, self:Mythic() and 39.9 or self:Easy() and 47.0 or 44.5, CL.count:format(CL.soaks, shatteredSpaceCount)) -- Shattered Space
-	self:Bar(1243577, self:Mythic() and 43.0 or self:Easy() and 56.3 or 52.9, CL.count:format(L.gravity, gravityCount)) -- Reverse Gravity
+	if not self:LFR() then
+		self:Bar(1243577, self:Mythic() and 43.0 or self:Easy() and 56.3 or 52.9, CL.count:format(L.gravity, gravityCount)) -- Reverse Gravity
+	end
 
 	mobCollector = {}
 	if self:GetOption(nullBinderMarker) or self:GetOption(livingMassLeftMarker) or self:GetOption(livingMassRightMarker) then
@@ -415,7 +417,7 @@ end
 
 function mod:ExcessMassApplied(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "green", CL.you:format(args.spellName))
+		self:PersonalMessage(args.spellId, false, args.spellName)
 		self:PlaySound(args.spellId, "info", nil, args.destName) -- carrying excess mass
 	end
 end
@@ -654,9 +656,9 @@ function mod:WorldsoulConsumption(args)
 		-- Pargoth
 		self:CDBar(1239262, self:Mythic() and 13.9 or 18.8, CL.count:format(CL.adds, conquerorsCrossCount))
 		if self:Mythic() then
-			self:CDBar(1237695, 17.0, CL.count:format(L.stardust_nova, stardustNovaCount)) -- Starshard Nova
+			self:CDBar(1251619, 17.0, CL.count:format(L.stardust_nova, stardustNovaCount)) -- Starshard Nova
 		else
-			self:CDBar(1251619, 25.9, CL.count:format(L.stardust_nova, stardustNovaCount)) -- Stardust Nova
+			self:CDBar(1237695, 25.9, CL.count:format(L.stardust_nova, stardustNovaCount)) -- Stardust Nova
 		end
 	end
 end
@@ -756,9 +758,9 @@ function mod:ConquerorsCross(args)
 		else
 			-- Pargoth
 			if self:Mythic() then
-				self:Bar(1237695, {3.2, 17.0}, CL.count:format(L.stardust_nova, stardustNovaCount)) -- Starshard Nova
+				self:Bar(1251619, {3.2, 17.0}, CL.count:format(L.stardust_nova, stardustNovaCount)) -- Starshard Nova
 			else
-				self:Bar(1251619, {7.1, 25.9}, CL.count:format(L.stardust_nova, stardustNovaCount)) -- Stardust Nova
+				self:Bar(1237695, {7.1, 25.9}, CL.count:format(L.stardust_nova, stardustNovaCount)) -- Stardust Nova
 			end
 		end
 		self:Bar(1238765, self:Mythic() and 10.5 or 11.8, CL.count:format(L.extinction, extinctionCount)) -- Extinction
@@ -914,7 +916,7 @@ function mod:TotalDestruction(args)
 	self:CDBar(1231716, 32, L.extinguish_the_stars) -- Extinguish the Stars
 	self:CDBar(1233539, self:Mythic() and 62.7 or 61.7, CL.count:format(self:SpellName(1233539), devourCount)) -- Devour
 	if self:Mythic() then
-		self:CDBar(1234242, 74.7, CL.count:format(self:SpellName(1234242), gravityCount)) -- Gravitational Distortion
+		self:CDBar(1234242, 74.7, CL.count:format(L.gravity, gravityCount)) -- Gravitational Distortion
 	else
 		self:CDBar(1232973, 70.6, CL.count:format(self:SpellName(1232973), supernovaCount)) -- Supernova
 		self:CDBar(1250055, 75.0, CL.count:format(L.slows, voidgraspCount)) -- Voidgrasp
@@ -996,7 +998,11 @@ function mod:DarkenedSky()
 	if darkenedSkyCount < 6 then
 		local cd = darkenedSkyCount % 2 == 1 and 33.3 or 66.6
 		if self:Mythic() then
-			cd = darkenedSkyCount % 2 == 1 and 30.0 or 50.0
+			if darkenedSkyCount == 2 then
+				cd = 43
+			else
+				cd = darkenedSkyCount % 2 == 1 and 30.0 or 50.0
+			end
 		end
 		self:Bar(1234044, cd, CL.count:format(L.darkened_sky, darkenedSkyCount))
 	end

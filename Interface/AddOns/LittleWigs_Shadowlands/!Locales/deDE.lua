@@ -207,6 +207,7 @@ if L then
 	L.tracker_zokorss = "Fährtenleser Zo'korss"
 	L.ancient_core_hound = "Uralter Kernhund"
 	L.enraged_direhorn = "Wütendes Terrorhorn"
+	L.frenzied_nightclaw = "Rasende Nachtkralle"
 	L.cartel_skulker = "Kartellschleicher"
 	L.cartel_wiseguy = "Kartellmitglied"
 	L.cartel_muscle = "Kartellkraftprotz"
@@ -220,7 +221,6 @@ if L then
 	L.commerce_enforcer = "Handelsvollstrecker"
 	L.commander_zofar = "Kommandant Zo'far"
 
-	L.tazavesh_soleahs_gambit = "Tazavesh: So'leahs Schachzug"
 	L.hylbrande_warmup_trigger = "Seht, wie sich Eure Weisheit gegen die Macht der Titanen behauptet."
 	L.portal_open = "Portal wird geöffnet"
 	L.portal_open_desc = "Zeigt mit einem Timer an, wann das Portal zum nächsten Bereich geöffnet wird."
